@@ -2,7 +2,15 @@ import axios from 'axios';
 import chalk from 'chalk';
 import { Report, Reports } from './models/report.js';
 
+/**
+ * A class for retrieving METAR weather reports.
+ */
 export class Weather {
+    /**
+     * Returns the weather report for a given station.
+     * @param icaoId - The ICAO ID of the station.
+     * @returns A Promise that resolves to a Report object.
+     */
     public static async forStation(icaoId: string): Promise<Report> {
         const url = `https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=${icaoId}}&format=json`;
         let reports = {} as Reports;
