@@ -3,12 +3,30 @@
  */
 export class Conversion {
     /**
+     * Converts altimeter reading from hPa to inHg.
+     * @param altimeter - The altimeter reading in hPa.
+     * @returns The altimeter reading in inHg.
+     */
+    public static altimeterToInHg(altimeter: number): number {
+        return altimeter / 33.8639;
+    }
+
+    /**
      * Converts temperature in Celsius to Fahrenheit.
      * @param celsius The temperature in Celsius.
      * @returns The temperature in Fahrenheit.
      */
     public static celsiusToFahrenheit(celsius: number): number {
         return (celsius * 9 / 5) + 32;
+    }
+
+    /**
+     * Converts feet to meters.
+     * @param feet The number of feet to convert.
+     * @returns The equivalent number of meters.
+     */
+    public static feetToMeters(feet: number): number {
+        return feet * 0.3048;
     }
 
     /**
