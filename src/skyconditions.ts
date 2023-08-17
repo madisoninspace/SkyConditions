@@ -20,10 +20,11 @@ for (const envVar of requiredEnvVars) {
     }
 }
 const dryRun = process.env.DRY_RUN ?? 'false';
+const agent = Bluesky.create();
+await ObservationTime.fileCheck();
 
 // Setup bluesky agent
 if (dryRun === 'false') {
-    const agent = Bluesky.create();
     Bluesky.login(agent, process.env.BSKY_USERNAME ?? '', process.env.BSKY_PASSWORD ?? '');
 } else {
     console.log(chalk.yellow('Dry run mode enabled. Login to BlueSky will be skipped.'));
@@ -33,23 +34,21 @@ if (dryRun === 'false') {
 const report = await Weather.forStation(process.env.ICAO ?? '');
 
 // Check observation time
-if (ObservationTime.check(report.obsTime ?? 0) && dryRun === 'false') {
+const timeCheck = await ObservationTime.check(report.obsTime ?? 0);
+if (timeCheck && dryRun === 'false') {
     console.log(chalk.yellow('No new weather report available.'));
     process.exit(0);
 }
 
-// Format weather report
-const formattedReport = formatText(report);
-
 // Post to BlueSky, or print to console if dry run is enabled
 if (dryRun === 'false') {
-    // post to BlueSky
+    await Bluesky.post(agent, report);
 } else {
-    console.log(formattedReport);
+    console.log(formatText(report));
 }
 
 // Save observation time
-ObservationTime.save(report.obsTime ?? 0);
+await ObservationTime.save(report.obsTime!);
 
 // Exit
 console.log(chalk.green('Done.'));
