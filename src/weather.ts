@@ -1,9 +1,9 @@
 import axios from 'axios';
 import chalk from 'chalk';
-import { Reports } from './models/report.js';
+import { Report, Reports } from './models/report.js';
 
 export class Weather {
-    public static async forStation(icaoId: string): Promise<Reports> {
+    public static async forStation(icaoId: string): Promise<Report> {
         const url = `https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=${icaoId}}&format=json`;
         let reports = {} as Reports;
 
@@ -17,6 +17,11 @@ export class Weather {
             console.log(chalk.red(`Error: ${error}`));
         });
 
-        return reports;
+        if (reports.length !== 1) {
+            console.log(chalk.red(`Error: ${icaoId} is not a valid ICAO ID.`));
+            process.exit(1);
+        }
+
+        return reports[0];
     }
 }
