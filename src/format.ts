@@ -11,10 +11,10 @@ export function formatText(report: Report): string {
     // Temperature
     switch (units) {
     case 'imperial':
-        lines.push(`Temperature: ${Conversion.celsiusToFahrenheit(report.temp ?? 0)}°F`);
+        lines.push(`Temperature: ${Conversion.round(Conversion.celsiusToFahrenheit(report.temp ?? 0), 1)}°F`);
         break;
     case 'metric':
-        lines.push(`Temperature: ${report.temp}°C`);
+        lines.push(`Temperature: ${Conversion.round(report.temp ?? 0, 1)}°C`);
         break;
     }
 
@@ -29,7 +29,7 @@ export function formatText(report: Report): string {
     }
 
     // Wind
-    lines.push(`Wind: ${report.wdir ?? 0}° at ${report.wspd ?? 0} kts (${Conversion.knotsToMph(report.wspd ?? 0)} mph | ${Conversion.knotsToKph(report.wspd ?? 0)} kph)`);
+    lines.push(`Wind: ${report.wdir ?? 0}° at ${report.wspd ?? 0} kts (${Conversion.round(Conversion.knotsToMph(report.wspd ?? 0), 0)} mph | ${Conversion.round(Conversion.knotsToKph(report.wspd ?? 0), 0)} kph)`);
 
     // Visibility
     lines.push(`Visibility: ${report.visib ?? 0} sm`);
@@ -37,10 +37,10 @@ export function formatText(report: Report): string {
     // Altimeter
     switch (units) {
     case 'imperial':
-        lines.push(`Altimeter: ${Conversion.altimeterToInHg(report.altim ?? 0)} inHg`);
+        lines.push(`Altimeter: ${Conversion.round(Conversion.altimeterToInHg(report.altim ?? 0), 2)} inHg\n`);
         break;
     case 'metric':
-        lines.push(`Altimeter: ${report.altim} hPa`);
+        lines.push(`Altimeter: ${Conversion.round(report.altim ?? 0, 0)} hPa\n`);
         break;
     }
 
