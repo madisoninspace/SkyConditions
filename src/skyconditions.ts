@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { Title } from './title.js';
 
+
 // Print title
 Title.print();
 
