@@ -12,7 +12,7 @@ export class Weather {
      * @returns A Promise that resolves to a Report object.
      */
     public static async forStation(icaoId: string): Promise<Report> {
-        const url = `https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=${icaoId}}&format=json`;
+        const url = `https://www.aviationweather.gov/cgi-bin/data/metar.php?ids=${icaoId}}&format=json`;
         let reports = {} as Reports;
 
         await axios({

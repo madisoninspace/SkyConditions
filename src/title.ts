@@ -10,6 +10,6 @@ export class Title {
      */
     public static print(): void {
         console.log(chalk.blue('SkyConditions ' + version));
-        console.log(chalk.blue('Created by Hannah Wass <github.com/hannahwxyz>\n'));
+        console.log(chalk.blue('Created by Madison L.H. Wass <github.com/madisoninspace>\n'));
     }
 }
